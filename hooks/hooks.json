@@ -1,0 +1,4 @@
+{
+  "description": "MoeGo plugin hooks — reserved for future session-level context injection (e.g. project paths, grey env info).",
+  "hooks": {}
+}

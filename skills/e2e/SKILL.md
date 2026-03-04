@@ -1,9 +1,11 @@
 ---
-name: moego:e2e
-description: E2E 测试规划与代码生成，遵循 MoeGo E2E 最佳实践
-triggers:
-  - /moego:e2e
-  - 功能开发任务中检测到需要 E2E 测试
+name: e2e
+version: 1.2.0
+description: >
+  This skill should be used when the user asks to plan or generate E2E tests for
+  MoeGo features, mentions Playwright, moego-e2e-autotest, or when a feature
+  development task involves UI interactions, pages, or user flows that require
+  automated end-to-end coverage.
 ---
 
 # MoeGo E2E Testing Skill
@@ -12,9 +14,9 @@ triggers:
 
 ## 触发方式
 
-| 方式 | 场景 |
-|------|------|
-| 独立调用 | 用户执行 `/moego:e2e` |
+| 方式     | 场景                                                    |
+| -------- | ------------------------------------------------------- |
+| 独立调用 | 用户执行 `/moego:e2e`                                   |
 | 联动建议 | 检测到功能开发任务时，主动提示"是否需要规划 E2E 测试？" |
 
 ## 工作模式
@@ -38,10 +40,10 @@ triggers:
 
 ### 测试场景
 
-| # | 场景 | 优先级 | 数据策略 | 预计路径 |
-|---|------|--------|----------|----------|
-| 1 | 正常创建预约 | P0 | UI 全流程 | tests/grooming/.../createAppt.spec.ts |
-| 2 | 缺少必填字段 | P1 | API + UI | 同上 |
+| #   | 场景         | 优先级 | 数据策略  | 预计路径                              |
+| --- | ------------ | ------ | --------- | ------------------------------------- |
+| 1   | 正常创建预约 | P0     | UI 全流程 | tests/grooming/.../createAppt.spec.ts |
+| 2   | 缺少必填字段 | P1     | API + UI  | 同上                                  |
 
 ### 依赖的 Page Object
 - [ ] `AppointmentPage` — 已存在，需扩展方法 `xxx`
@@ -66,12 +68,12 @@ triggers:
 
 ### 1. 架构规范
 
-| 规范 | 说明 |
-|------|------|
+| 规范                | 说明                                             |
+| ------------------- | ------------------------------------------------ |
 | Page Object Pattern | 页面封装为类，继承 `Common`，接收 `page` + `api` |
-| UI 组件封装 | 复用 `@pages/uiComponents/` 下的组件类 |
-| Fixture 系统 | 使用 `@fixture/index` 的 `test` |
-| Utils 分离 | 测试目录下辅助逻辑放 `utils.ts` |
+| UI 组件封装         | 复用 `@pages/uiComponents/` 下的组件类           |
+| Fixture 系统        | 使用 `@fixture/index` 的 `test`                  |
+| Utils 分离          | 测试目录下辅助逻辑放 `utils.ts`                  |
 
 ### 2. 定位策略（优先级从高到低）
 
@@ -111,9 +113,9 @@ await page.waitForTimeout(1000);
 ### 4. 数据策略（按优先级）
 
 | 优先级 | 准备 | 核心流程 | 清理 |
-|--------|------|----------|------|
-| P0 | UI | UI | 可选 |
-| P1/P2 | API | UI | API |
+| ------ | ---- | -------- | ---- |
+| P0     | UI   | UI       | 可选 |
+| P1/P2  | API  | UI       | API  |
 
 ---
 
@@ -151,11 +153,11 @@ project/BWeb/tests/
 
 ### 测试账号
 
-| 场景 | 账号命名 |
-|------|----------|
-| 通用测试 | `account_bd` |
-| 特定功能 | `drawer-service@moego.pet` |
-| UI 自动化 | `account_bd_ui_auto` |
+| 场景      | 账号命名                   |
+| --------- | -------------------------- |
+| 通用测试  | `account_bd`               |
+| 特定功能  | `drawer-service@moego.pet` |
+| UI 自动化 | `account_bd_ui_auto`       |
 
 ### 代码模板
 

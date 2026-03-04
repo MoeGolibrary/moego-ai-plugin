@@ -1,23 +1,22 @@
 # Claude Code Adapter
 
-Claude Code 通过 `~/.claude/skills/` 目录加载 Skills。
+Claude Code 通过 Plugin System 原生支持 MoeGo Plugin，无需手工配置 symlink。
 
-## 自动配置
+## 推荐安装方式（Plugin System）
 
-安装脚本会自动创建符号链接（目录级）：
-
+```bash
+/plugin marketplace add MoeGolibrary/moego-ai-marketplace
+/plugin install moego@moego-ai-marketplace
 ```
-~/.claude/skills/moego:e2e -> ~/.claude/plugins/moego-skills/skills/e2e
+
+安装后 Slash Command 自动可用：`/moego:superflow`、`/moego:e2e` 等。
+
+## 手动安装（备用）
+
+如无法使用 Marketplace，可直接克隆并符号链接：
+
+```bash
+git clone https://github.com/MoeGolibrary/moego-ai-plugin ~/.claude/plugins/moego-ai-plugin
 ```
 
-## 手动配置
-
-如需手动配置，可在项目 `.claude/settings.json` 中添加：
-
-```json
-{
-  "skills": [
-    "~/.claude/plugins/moego-skills/skills/e2e/SKILL.md"
-  ]
-}
-```
+Claude Code 会自动发现 `.claude-plugin/plugin.json` 并注册所有 Skills。
