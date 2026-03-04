@@ -1,10 +1,11 @@
 ---
-name: moego:superflow
-description: AI Native 开发工作流 - 从需求到交付的完整流程，包含 brainstorming、planning、TDD 执行、双阶段审查和验证门控
-triggers:
-  - /moego:superflow
-  - 开始新功能开发
-  - 开始 bug 修复
+name: superflow
+version: 1.3.0
+description: >
+  This skill should be used when the user wants to start a new feature, fix a bug,
+  or run the MoeGo AI-native development workflow end-to-end. Invoke when the user
+  says "开始新功能开发", "开始 bug 修复", "run superflow", or asks to scaffold a
+  full development cycle from requirements to delivery.
 ---
 
 # Superflow - AI Native Development Workflow
@@ -39,13 +40,13 @@ AI Native 开发工作流，编排所有 superpowers 技能形成完整流程。
 
 ## 核心理念
 
-| 传统开发 | AI Native |
-|----------|-----------|
+| 传统开发         | AI Native                  |
+| ---------------- | -------------------------- |
 | 人写代码，人审查 | AI 写代码，AI 审查，人决策 |
-| 串行执行 | 并行子代理 |
-| 手动验证 | 自动化验证门控 |
-| 事后测试 | TDD 强制 |
-| 凭感觉完成 | 证据驱动完成 |
+| 串行执行         | 并行子代理                 |
+| 手动验证         | 自动化验证门控             |
+| 事后测试         | TDD 强制                   |
+| 凭感觉完成       | 证据驱动完成               |
 
 ## 前置要求
 
@@ -115,12 +116,12 @@ Phase 4: Completion (verification + finishing)
 
 **自动触发条件:** Agent 根据 Phase 0/1 的内容判断是否需要 E2E 测试：
 
-| 需要 E2E | 不需要 E2E |
-|----------|------------|
-| 涉及 UI 交互、页面、用户流程 | 纯后端 API、工具类、脚本 |
-| 新增/修改前端功能 | 重构、性能优化（无行为变更） |
-| 用户可见的行为变更 | 配置变更、依赖升级 |
-| Plan 中提到"页面"、"表单"、"按钮"等 | Plan 中无 UI 相关描述 |
+| 需要 E2E                            | 不需要 E2E                   |
+| ----------------------------------- | ---------------------------- |
+| 涉及 UI 交互、页面、用户流程        | 纯后端 API、工具类、脚本     |
+| 新增/修改前端功能                   | 重构、性能优化（无行为变更） |
+| 用户可见的行为变更                  | 配置变更、依赖升级           |
+| Plan 中提到"页面"、"表单"、"按钮"等 | Plan 中无 UI 相关描述        |
 
 **如果判断需要 E2E：**
 
@@ -179,9 +180,9 @@ Phase 4: Completion (verification + finishing)
 
 ### 支持技能
 
-| 场景 | 技能 |
-|------|------|
-| 遇到 Bug | `superpowers:systematic-debugging` |
+| 场景         | 技能                                      |
+| ------------ | ----------------------------------------- |
+| 遇到 Bug     | `superpowers:systematic-debugging`        |
 | 多个独立问题 | `superpowers:dispatching-parallel-agents` |
 
 ---
@@ -237,27 +238,27 @@ Phase 4: Completion (verification + finishing)
 
 ## 快速参考
 
-| Phase | 技能 | 输出 |
-|-------|------|------|
-| 0. Requirements | brainstorming | 设计文档 |
-| 1. Planning | writing-plans | 实现计划 |
-| 1.5. E2E Planning | moego:e2e (Plan) | E2E 测试计划 |
-| 2. Environment | using-git-worktrees | 干净工作区 |
-| 3. Execution | subagent-driven-development | 可工作代码 |
-| 3.5. E2E Impl | moego:e2e (Impl) | E2E 测试代码 |
-| 4. Completion | verification + finishing | 合并/PR 的代码 |
+| Phase             | 技能                        | 输出           |
+| ----------------- | --------------------------- | -------------- |
+| 0. Requirements   | brainstorming               | 设计文档       |
+| 1. Planning       | writing-plans               | 实现计划       |
+| 1.5. E2E Planning | moego:e2e (Plan)            | E2E 测试计划   |
+| 2. Environment    | using-git-worktrees         | 干净工作区     |
+| 3. Execution      | subagent-driven-development | 可工作代码     |
+| 3.5. E2E Impl     | moego:e2e (Impl)            | E2E 测试代码   |
+| 4. Completion     | verification + finishing    | 合并/PR 的代码 |
 
 ---
 
 ## AI Native 优势
 
-| 能力 | 如何利用 |
-|------|----------|
-| **并行** | `dispatching-parallel-agents` 处理独立问题 |
-| **无状态** | 每任务新子代理，无上下文污染 |
-| **不疲劳** | 每任务双阶段审查（Spec + Quality） |
-| **一致性** | TDD 强制执行，不会"偷懒跳过" |
-| **可验证** | `verification-before-completion` 门控 |
+| 能力       | 如何利用                                   |
+| ---------- | ------------------------------------------ |
+| **并行**   | `dispatching-parallel-agents` 处理独立问题 |
+| **无状态** | 每任务新子代理，无上下文污染               |
+| **不疲劳** | 每任务双阶段审查（Spec + Quality）         |
+| **一致性** | TDD 强制执行，不会"偷懒跳过"               |
+| **可验证** | `verification-before-completion` 门控      |
 
 ---
 
@@ -291,17 +292,17 @@ Phase 4: Completion (verification + finishing)
 
 ## 相关技能
 
-| 技能 | 用途 |
-|------|------|
-| `superpowers:brainstorming` | 需求探索和设计 |
-| `superpowers:writing-plans` | 编写实现计划 |
-| `superpowers:using-git-worktrees` | 创建隔离工作区 |
-| `superpowers:subagent-driven-development` | 子代理驱动执行 |
-| `superpowers:test-driven-development` | TDD 流程 |
-| `superpowers:systematic-debugging` | 系统化调试 |
-| `superpowers:dispatching-parallel-agents` | 并行代理调度 |
-| `superpowers:verification-before-completion` | 完成前验证 |
-| `superpowers:finishing-a-development-branch` | 完成开发分支 |
-| `superpowers:requesting-code-review` | 请求代码审查 |
-| `superpowers:receiving-code-review` | 接收代码审查 |
-| `moego:e2e` | E2E 测试规划与实现 |
+| 技能                                         | 用途               |
+| -------------------------------------------- | ------------------ |
+| `superpowers:brainstorming`                  | 需求探索和设计     |
+| `superpowers:writing-plans`                  | 编写实现计划       |
+| `superpowers:using-git-worktrees`            | 创建隔离工作区     |
+| `superpowers:subagent-driven-development`    | 子代理驱动执行     |
+| `superpowers:test-driven-development`        | TDD 流程           |
+| `superpowers:systematic-debugging`           | 系统化调试         |
+| `superpowers:dispatching-parallel-agents`    | 并行代理调度       |
+| `superpowers:verification-before-completion` | 完成前验证         |
+| `superpowers:finishing-a-development-branch` | 完成开发分支       |
+| `superpowers:requesting-code-review`         | 请求代码审查       |
+| `superpowers:receiving-code-review`          | 接收代码审查       |
+| `moego:e2e`                                  | E2E 测试规划与实现 |

@@ -1,11 +1,12 @@
 ---
-name: moego:writing-prompts
-description: Use when composing one-shot prompts, task instructions, questions, code requests, or analysis prompts to send to an LLM — any input consumed once that does not reside in context long-term
-triggers:
-  - /moego:writing-prompts
-  - 编写 prompt、任务指令、LLM 输入
-  - 优化或审查现有 prompt
-  - prompt 输出不符合预期需要改进
+name: writing-prompts
+version: 1.1.0
+description: >
+  This skill should be used when composing one-shot prompts, task instructions,
+  questions, code requests, or analysis prompts to send to an LLM — any input
+  consumed once that does not reside in context long-term. Also triggers when the
+  user wants to optimize an existing prompt or improve output quality from an LLM.
+  Chinese keywords: 编写 prompt、任务指令、LLM 输入、优化 prompt、prompt 输出不符合预期。
 ---
 
 # AI Prompt Writing Guide

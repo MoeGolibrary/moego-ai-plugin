@@ -8,8 +8,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Config
-REPO_URL="https://github.com/MoeGolibrary/moego-skills.git"
-INSTALL_DIR="$HOME/.claude/plugins/moego-skills"
+REPO_URL="https://github.com/MoeGolibrary/moego-ai-plugin.git"
+INSTALL_DIR="$HOME/.claude/plugins/moego-ai-plugin"
 BIN_DIR="$HOME/.local/bin"
 
 echo -e "${GREEN}🚀 Installing MoeGo Skills...${NC}"
@@ -56,30 +56,15 @@ mkdir -p "$CLAUDE_SKILLS_DIR" "$CODEX_SKILLS_DIR" "$OPENCODE_SKILLS_DIR"
 for skill_dir in "$INSTALL_DIR/skills/"*/; do
     skill_name=$(basename "$skill_dir")
     if [ -f "$skill_dir/SKILL.md" ]; then
-        # Prefer the declared skill name for link name; fallback to directory name.
-        skill_display_name=$(sed -n 's/^name:[[:space:]]*//p' "$skill_dir/SKILL.md" | head -n 1)
-        link_name="${skill_display_name:-$skill_name}"
+        # Clean up legacy symlinks with various naming formats
+        rm -rf "$CLAUDE_SKILLS_DIR/$skill_name" "$CODEX_SKILLS_DIR/$skill_name" "$OPENCODE_SKILLS_DIR/$skill_name"
+        rm -rf "$CLAUDE_SKILLS_DIR/moego-$skill_name" "$CODEX_SKILLS_DIR/moego-$skill_name" "$OPENCODE_SKILLS_DIR/moego-$skill_name"
+        rm -rf "$CLAUDE_SKILLS_DIR/moego:$skill_name" "$CODEX_SKILLS_DIR/moego:$skill_name" "$OPENCODE_SKILLS_DIR/moego:$skill_name"
 
-        # Remove old file symlinks if they exist.
-        rm -f "$CLAUDE_SKILLS_DIR/$skill_name.md" "$CLAUDE_SKILLS_DIR/$link_name.md"
-
-        # Remove legacy link name if it doesn't map to an existing skill dir.
-        if [[ "$link_name" == *:* ]]; then
-            legacy_name="${link_name//:/-}"
-            if [ "$legacy_name" != "$link_name" ] && [ ! -d "$INSTALL_DIR/skills/$legacy_name" ]; then
-                rm -rf "$CLAUDE_SKILLS_DIR/$legacy_name" "$CODEX_SKILLS_DIR/$legacy_name" "$OPENCODE_SKILLS_DIR/$legacy_name"
-            fi
-        fi
-
-        # Remove link using directory name when it differs from the declared name.
-        if [ "$skill_name" != "$link_name" ]; then
-            rm -rf "$CLAUDE_SKILLS_DIR/$skill_name" "$CODEX_SKILLS_DIR/$skill_name" "$OPENCODE_SKILLS_DIR/$skill_name"
-        fi
-
-        # Create directory symlink (without trailing slash)
-        ln -sfn "${skill_dir%/}" "$CLAUDE_SKILLS_DIR/$link_name"
-        ln -sfn "${skill_dir%/}" "$CODEX_SKILLS_DIR/$link_name"
-        ln -sfn "${skill_dir%/}" "$OPENCODE_SKILLS_DIR/$link_name"
+        # Claude Code: skip symlink — Plugin System handles auto-discovery via .claude-plugin/
+        # Codex / OpenCode: use moego- prefix to maintain namespace
+        ln -sfn "${skill_dir%/}" "$CODEX_SKILLS_DIR/moego-$skill_name"
+        ln -sfn "${skill_dir%/}" "$OPENCODE_SKILLS_DIR/moego-$skill_name"
     fi
 done
 

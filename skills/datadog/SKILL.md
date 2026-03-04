@@ -1,11 +1,11 @@
 ---
-name: moego:datadog
-description: Datadog 日志/Trace/依赖查询工具集合，支持 Flex/Rehydrated 日志、Trace span 解析与服务依赖分析
-triggers:
-  - /moego:datadog
-  - 需要查询 Datadog 日志
-  - 需要查看 Trace/Span
-  - 需要分析服务依赖
+name: datadog
+version: 1.1.0
+description: >
+  This skill should be used when the user needs to query Datadog logs, inspect
+  traces or spans, analyze service dependencies, or debug production issues in
+  MoeGo services. Triggers on mentions of "Datadog", "日志查询", "Trace", "span",
+  "服务依赖", or requests to investigate production errors.
 ---
 
 # MoeGo Datadog Skill
@@ -16,14 +16,14 @@ triggers:
 1. **设置凭证**（环境变量）:
    - `DD_API_KEY`, `DD_APP_KEY`, 可选 `DD_SITE` (默认: https://api.us5.datadoghq.com)
 2. **查询日志**（支持 Flex/Rehydrated via GET）:
-   - `bash skills/datadog/scripts/datadog.sh "service:moego-api-v3" 10 now-4h now -v`
+   - `bash ${CLAUDE_PLUGIN_ROOT}/skills/datadog/scripts/datadog.sh "service:moego-api-v3" 10 now-4h now -v`
 3. **查询日志（POST search）**:
-   - `uv run skills/datadog/scripts/query_logs.py "service:moego-api-v3 status:error" -n 20 -f now-1h -t now`
+   - `uv run ${CLAUDE_PLUGIN_ROOT}/skills/datadog/scripts/query_logs.py "service:moego-api-v3 status:error" -n 20 -f now-1h -t now`
 4. **获取 Trace**:
-   - `uv run skills/datadog/scripts/get_trace.py <trace_id>`
+   - `uv run ${CLAUDE_PLUGIN_ROOT}/skills/datadog/scripts/get_trace.py <trace_id>`
 5. **查看服务依赖**:
-   - `uv run skills/datadog/scripts/get_dependencies.py moego-svc-payment` (默认 env: ns-testing)
-   - `uv run skills/datadog/scripts/get_dependencies.py moego-svc-payment --env ns-production`
+   - `uv run ${CLAUDE_PLUGIN_ROOT}/skills/datadog/scripts/get_dependencies.py moego-svc-payment` (默认 env: ns-testing)
+   - `uv run ${CLAUDE_PLUGIN_ROOT}/skills/datadog/scripts/get_dependencies.py moego-svc-payment --env ns-production`
 
 ## Tools
 - **scripts/datadog.sh**: 通过 `/api/v2/logs/events` 搜索日志，支持 `storage_tier=flex`。

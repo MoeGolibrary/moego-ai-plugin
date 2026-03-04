@@ -1,11 +1,12 @@
 ---
-name: moego:writing-system-documents
-description: Use when writing or reviewing compact-immune documents that persist in Agent Context throughout entire sessions — CLAUDE.md, role definitions, project rules, behavior specs, system prompts
-triggers:
-  - /moego:writing-system-documents
-  - 编写或审查 CLAUDE.md
-  - 编写 system prompt、角色定义、行为规范
-  - 审计系统文档的 token 浪费或模糊规则
+name: writing-system-documents
+version: 1.1.0
+description: >
+  This skill should be used when writing or reviewing compact-immune documents that
+  persist in Agent Context throughout entire sessions — CLAUDE.md, role definitions,
+  project rules, behavior specs, system prompts. Also triggers when auditing system
+  documents for token waste, vague rules, or structural issues.
+  Chinese keywords: 编写 CLAUDE.md、system prompt、角色定义、行为规范、审计系统文档。
 ---
 
 # Agent Resident System Document — Writing Guide
@@ -139,11 +140,11 @@ For E2E tests use playwright.
 For API tests use supertest.
 
 # ✅
-| Test type | Tool |
-|-----------|------|
-| Unit | vitest |
-| E2E | playwright |
-| API | supertest |
+| Test type | Tool       |
+| --------- | ---------- |
+| Unit      | vitest     |
+| E2E       | playwright |
+| API       | supertest  |
 ```
 
 Delete all atmosphere statements — "Please remember", "very important", "keep in mind".
