@@ -2,11 +2,7 @@
 name: code-to-spec
 version: 1.0.0
 description: >
-  This skill should be used when the user asks to write a SPEC, create a module
-  specification, or mentions "SPEC", "规格文档", "模块规格", "组件规格", "工具规格",
-  "hook 规格". It covers UI components, hooks/utilities, scripts/toolchains, and
-  business modules. Follow the step-by-step workflow to produce a SPEC.md that
-  enables AI or new developers to implement the module from scratch.
+  Triggered when user asks to write a SPEC or module specification. Generates SPEC.md for UI components, hooks/utilities, scripts/toolchains, and business modules.
 ---
 
 # SPEC 编写
@@ -87,7 +83,7 @@ SPEC 不是使用文档（Storybook / README 的职责），也不是 API 参考
 
 ### Step 4: Verify（校验）
 
-使用子 agent 执行校验任务：
+使用子 agent 执行校验任务。具体操作方式：在当前对话中创建一个独立的子 agent（或新对话上下文），将生成的 SPEC.md 和相关 steering 文件作为输入传递给它，**不提供源码访问权限**。子 agent 根据以下 prompt 独立执行校验，并以表格形式输出报告：
 
 > 假设你只有 SPEC.md + steering 文件作为输入，需要从零实现该模块。
 > 逐一对比 SPEC 描述和实际源码，找出：
@@ -211,3 +207,53 @@ SPEC 不是使用文档（Storybook / README 的职责），也不是 API 参考
 ## SPEC 增量更新策略
 
 当模块发生变更需要更新已有 SPEC 时，参见 `references/incremental-update.md`。
+
+## 示例 SPEC 输出
+
+以下是一个简化的 UI 组件 SPEC 片段（中等复杂度），展示"预先设计"视角下的结构和风格：
+
+```markdown
+# Button 组件规格
+
+本文档描述 Button（按钮）组件的功能场景与关键设计约束，作为实现的核心参考。
+
+## 终端用户场景
+
+### 基础交互
+- 作为终端用户，我可以点击按钮触发操作，并通过视觉变体区分操作的重要程度
+- 作为终端用户，我可以看到按钮的加载状态反馈，知道操作正在进行中
+
+### 键盘操作
+- 作为终端用户，我可以通过 Tab 聚焦按钮，按 Enter 或 Space 触发操作
+
+## 开发者场景
+
+### 基础使用
+- 作为开发者，我可以通过语义化的变体属性控制按钮的视觉层级
+- 作为开发者，我可以将按钮设为加载态，此时按钮自动阻止重复交互
+
+### 组合布局
+- 作为开发者，我可以通过 ButtonGroup 将多个按钮组合为一组，组内按钮自动处理相邻边界的视觉衔接
+
+## 关键设计约束
+
+### 状态管理
+1. 加载态隐含禁用语义——进入加载态时自动阻止用户交互，无需额外设置禁用
+2. 加载态与禁用态互斥——加载态优先级高于禁用态的视觉表现
+
+### 组合模式
+3. ButtonGroup 通过上下文向子按钮传递布局信息，子按钮据此调整自身边界样式
+4. ButtonGroup 内的按钮共享尺寸和变体约束——组内一致性优先于单个按钮的独立配置
+
+## 适用场景
+- 表单提交、确认操作等需要明确用户意图的交互
+- 工具栏中多个操作的组合排列
+- 对话框底部的操作按钮组
+
+## 不适用场景
+- 纯导航跳转 → 使用 `Link`
+- 图标触发的轻量操作 → 使用 `IconButton`
+- 菜单项或列表项中的操作 → 使用对应容器组件的交互能力
+```
+
+> 注意示例中的写作风格：不出现具体类型定义、样式值、内部实现机制，始终以设计意图和行为语义描述。实际 SPEC 会根据复杂度级别调整约束条数和分组深度。

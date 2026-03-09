@@ -80,14 +80,14 @@ moego-ai-plugin/                      ← 仓库根目录（原 moego-skills）
 1. 在 `skills/` 下创建目录，如 `skills/your-skill/`
 2. 创建 `SKILL.md`，frontmatter 用 **bare name**（不加 `moego-` 前缀）：
 
-```yaml
----
-name: your-skill
-version: 1.0.0
-description: >
-  This skill should be used when the user asks to [specific trigger conditions].
----
-```
+   ```yaml
+   ---
+   name: your-skill
+   version: 1.0.0
+   description: >
+     This skill should be used when the user asks to [specific trigger conditions].
+   ---
+   ```
 
 3. Body 使用祈使句，核心内容控制在 1,500 词以内；详细文档放 `references/`
 4. 如有脚本，放 `skills/your-skill/scripts/`，路径用 `${CLAUDE_PLUGIN_ROOT}/skills/your-skill/scripts/`
