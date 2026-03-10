@@ -74,6 +74,7 @@ for skill_dir in "$INSTALL_DIR/skills/"*/; do
 done
 
 echo -e "${GREEN}✅ MoeGo Skills installed successfully!${NC}"
+echo -e "${YELLOW}⚠️  Kiro 用户注意：安装/更新 Skills 后需重启 Kiro 才能真正激活（仅 UI 显示不代表已完整加载）。${NC}"
 echo ""
 echo "Available commands:"
 echo "  moego-skills update  - Update all skills"

@@ -15,6 +15,8 @@ Kiro 启动时仅加载 SKILL.md 的 name 和 description（frontmatter），完
 
 > **注意**：Kiro 不支持发现文件夹级别的符号链接，因此采用直接复制而非 symlink。每次更新会先删除旧目录再重新复制。
 
+> ⚠️ **重启才能真正激活**：安装或更新全局 Skills 后，Kiro UI 上可能已显示新 Skill，但在重启 Kiro 之前，Skill 可能无法自动激活，或无法完整读取 SKILL.md 及 references 中的所有文件。请在安装/更新后重启 Kiro 以确保 Skill 真正激活。
+
 ## 手动配置
 
 ```bash
