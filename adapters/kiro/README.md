@@ -11,7 +11,9 @@ Kiro 启动时仅加载 SKILL.md 的 name 和 description（frontmatter），完
 
 ## 自动安装
 
-运行 `install.sh` 会自动为所有 Skills 创建带 `moego-` 前缀的符号链接至 `~/.kiro/skills/`。
+运行 `install.sh` 会自动将所有 Skills 以 `moego-` 前缀复制至 `~/.kiro/skills/`。
+
+> **注意**：Kiro 不支持发现文件夹级别的符号链接，因此采用直接复制而非 symlink。每次更新会先删除旧目录再重新复制。
 
 ## 手动配置
 
@@ -20,7 +22,10 @@ mkdir -p ~/.kiro/skills
 PLUGIN_ROOT=~/.claude/plugins/moego-ai-plugin
 for skill_dir in "$PLUGIN_ROOT"/skills/*/; do
   skill=$(basename "$skill_dir")
-  [ -f "$skill_dir/SKILL.md" ] && ln -sfn "${skill_dir%/}" ~/.kiro/skills/moego-${skill}
+  if [ -f "$skill_dir/SKILL.md" ]; then
+    rm -rf ~/.kiro/skills/moego-${skill}
+    cp -r "${skill_dir%/}" ~/.kiro/skills/moego-${skill}
+  fi
 done
 ```
 
