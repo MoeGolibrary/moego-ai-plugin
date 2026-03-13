@@ -1,97 +1,105 @@
-# MoeGo Plugin
+# MoeGo AI Plugin Marketplace
 
-MoeGo 研发团队 AI Agent Plugin，支持 Claude Code Plugin System 一键安装，兼容 AMP、Codex、OpenCode 等工具。
+MoeGo 研发团队 AI Agent Plugin Marketplace。为 MoeGo 宠物服务 SaaS 平台的工程师提供标准化的 AI 辅助工具集，支持 Claude Code、Codex、OpenCode、Kiro、Cursor 等主流 AI 编码工具。
 
-## 安装（Claude Code — 推荐）
+## 快速开始
+
+### Claude Code（推荐）
 
 ```bash
-# 1. 添加 MoeGo Marketplace（一次性）
+# 1. 添加 Marketplace（一次性）
 /plugin marketplace add MoeGolibrary/moego-ai-plugin
 
-# 2. 安装 MoeGo Plugin
-/plugin install moego@moego-ai-plugin
+# 2. 安装 Develop Plugin
+/plugin install develop@moego-ai-marketplace
 ```
 
-安装后，Slash Command 自动可用：
+### 其他工具
 
-| Skill                          | 说明                        | 调用方式                          |
-| ------------------------------ | --------------------------- | --------------------------------- |
-| moego:superflow                | AI Native 开发工作流        | `/moego:superflow`                |
-| moego:e2e                      | E2E 测试规划与代码生成      | `/moego:e2e`                      |
-| moego:datadog                  | Datadog 日志/Trace/依赖查询 | `/moego:datadog`                  |
-| moego:code-to-spec             | 模块 SPEC 规格文档编写      | `/moego:code-to-spec`             |
-| moego:skill-creator            | SKILL.md 编写与审查         | `/moego:skill-creator`            |
-| moego:writing-prompts          | 编写 LLM 一次性 prompt      | `/moego:writing-prompts`          |
-| moego:writing-system-documents | 编写 Agent 常驻系统文档     | `/moego:writing-system-documents` |
+| 工具     | 安装方式                                                                 | 调用格式             |
+| -------- | ------------------------------------------------------------------------ | -------------------- |
+| Codex    | [Codex Adapter](plugins/develop/adapters/codex/README.md)（symlink）     | `develop-<skill>`    |
+| OpenCode | [OpenCode Adapter](plugins/develop/adapters/opencode/README.md)（symlink）| `develop-<skill>`    |
+| Kiro     | [Kiro Adapter](plugins/develop/adapters/kiro/README.md)（copy）          | `/develop-<skill>`   |
+| Cursor   | [Cursor Adapter](plugins/develop/adapters/cursor/README.md)              | 手动配置             |
 
-### 更新 Plugin
+或直接运行安装脚本（为 Codex/OpenCode/Kiro 配置 adapter）：
 
 ```bash
-/plugin update moego
+git clone https://github.com/MoeGolibrary/moego-ai-plugin ~/.claude/plugins/moego-ai-plugin
+bash ~/.claude/plugins/moego-ai-plugin/plugins/develop/install.sh
 ```
 
-## 安装（AMP / Codex / OpenCode）
+> **注意**：手工 clone 仅为非 Claude Code 工具提供 adapter。Claude Code 用户请使用上方 Plugin System 安装方式。
 
-非 Claude Code 工具请参考对应 adapter 文档：
+### 更新
 
-- [Codex Adapter](adapters/codex/README.md)
-- [OpenCode Adapter](adapters/opencode/README.md)
-- [Kiro Adapter](adapters/kiro/README.md)
-- [Cursor Adapter](adapters/cursor/README.md)
+```bash
+/plugin marketplace update    # 更新 Marketplace 目录
+/plugin update develop        # 更新 Develop Plugin
+```
+
+## Develop Plugin — Skills 一览
+
+| Skill | 调用 | 说明 |
+|-------|------|------|
+| superflow | `/develop:superflow` | AI Native 全流程开发工作流：需求分析 → 方案设计 → 实现 → Code Review → 提交，覆盖 MoeGo 前端（React SPA）和 BFF（Hono）技术栈 |
+| e2e | `/develop:e2e` | E2E 测试规划与 Playwright 代码生成，基于 moego-e2e-autotest 项目的 Page Object 模式 |
+| datadog | `/develop:datadog` | Datadog 日志查询、Trace/Span 分析、服务依赖拓扑，支持 APM 和 RUM |
+| code-to-spec | `/develop:code-to-spec` | 从现有代码逆向生成模块 SPEC 规格文档，支持 UI 组件、Hook、脚本等多种模块类型 |
+| skill-creator | `/develop:skill-creator` | SKILL.md 编写与审查工具，遵循 agentskills.io 开放标准 |
+| writing-prompts | `/develop:writing-prompts` | 编写一次性 LLM Prompt 的结构化写作指南 |
+| writing-system-documents | `/develop:writing-system-documents` | 编写 Agent 常驻系统文档（CLAUDE.md、System Prompt 等）的写作指南，关注 token 成本优化 |
 
 ## 目录结构
 
 ```text
-moego-ai-plugin/                      ← 仓库根目录（原 moego-skills）
+moego-ai-plugin/                          ← 仓库根 = marketplace
 ├── .claude-plugin/
-│   └── plugin.json                   ← Plugin manifest（name: "moego"）
-├── skills/
-│   └── <name>/SKILL.md              ← 每个 Skill 一个目录，详见上方 Skill 列表
-├── hooks/
-│   └── hooks.json                    ← reserved for future session hooks
-├── agents/                           ← 未来：Agent 定义
-├── commands/                         ← 未来：Slash Command 定义
-├── adapters/                         ← 非 Claude Code 工具适配
-│   ├── claude-code/
-│   ├── codex/
-│   ├── cursor/
-│   ├── kiro/
-│   └── opencode/
-└── docs/
-    └── adr/                          ← 架构决策记录
+│   └── marketplace.json                  ← 插件目录（source 用相对路径）
+├── plugins/
+│   ├── develop/                          ← plugin: develop（研发工具）
+│   │   ├── .claude-plugin/plugin.json    ← plugin manifest
+│   │   ├── skills/                       ← 7 个 skill
+│   │   ├── adapters/                     ← 5 个工具适配
+│   │   ├── install.sh                    ← 手工安装脚本
+│   │   ├── bin/moego-skills              ← CLI（update/list）
+│   │   └── docs/adr/                     ← 架构决策记录
+│   ├── product/                          ← (planned)
+│   └── design/                           ← (planned)
+├── CLAUDE.md
+├── AGENTS.md
+└── README.md
 ```
 
-## 命名规范
+## 贡献
 
-本 Plugin 遵循 Claude Code Plugin System 规范：
+### 添加新 Skill
 
-| 层级          | 规则                                | 示例               |
-| ------------- | ----------------------------------- | ------------------ |
-| Plugin name   | `plugin.json` 中定义，kebab-case    | `"name": "moego"`  |
-| Skill name    | SKILL.md 中的 bare name（无前缀）   | `name: superflow`  |
-| Slash command | Claude Code 自动拼接 `plugin:skill` | `/moego:superflow` |
-
-> ⚠️ SKILL.md 中的 `name` 字段**不加** `moego-` 前缀。命名空间由 Plugin System 自动追加。
-> AMP/Codex 等工具通过 adapter 层的 symlink 脚本获取带前缀的 `moego-xxx` 别名。
-
-## 贡献新 Skill
-
-1. 在 `skills/` 下创建目录，如 `skills/your-skill/`
-2. 创建 `SKILL.md`，frontmatter 用 **bare name**（不加 `moego-` 前缀）：
+1. 创建 `plugins/develop/skills/<your-skill>/SKILL.md`
 
    ```yaml
    ---
    name: your-skill
    version: 1.0.0
    description: >
-     This skill should be used when the user asks to [specific trigger conditions].
+     This skill should be used when the user asks to [trigger conditions].
    ---
    ```
 
-3. Body 使用祈使句，核心内容控制在 1,500 词以内；详细文档放 `references/`
-4. 如有脚本，放 `skills/your-skill/scripts/`，路径用 `${CLAUDE_PLUGIN_ROOT}/skills/your-skill/scripts/`
-5. 提交 PR
+2. `name` 用 bare name，不加前缀；`description` 用英文
+3. 核心内容 ≤ 1,500 词，详细文档放 `references/`
+4. 脚本放 `scripts/`，路径用 `${CLAUDE_PLUGIN_ROOT}/skills/your-skill/scripts/`
+5. 运行 `bash plugins/develop/install.sh` 验证 adapter
+6. 提交 PR
+
+### 添加新 Plugin
+
+1. 在 `plugins/` 下创建目录（如 `plugins/product/`）
+2. 创建 `.claude-plugin/plugin.json`
+3. 在根 `marketplace.json` 添加 plugin entry（`source` 用相对路径）
+4. 提交 PR
 
 ## License
 
-MIT
+UNLICENSED

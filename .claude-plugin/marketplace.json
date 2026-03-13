@@ -1,0 +1,25 @@
+{
+  "name": "moego-ai-marketplace",
+  "owner": {
+    "name": "MoeGo Engineering",
+    "email": "engineering@moego.pet"
+  },
+  "metadata": {
+    "description": "MoeGo engineering team plugin marketplace",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "develop",
+      "description": "MoeGo development plugin — E2E testing, Superflow AI-native workflow, Datadog observability, code-to-spec, and LLM writing skills for the MoeGo pet services platform.",
+      "source": "./plugins/develop",
+      "category": "development",
+      "author": {
+        "name": "MoeGo Engineering"
+      },
+      "homepage": "https://github.com/MoeGolibrary/moego-ai-plugin",
+      "repository": "https://github.com/MoeGolibrary/moego-ai-plugin",
+      "license": "UNLICENSED"
+    }
+  ]
+}
