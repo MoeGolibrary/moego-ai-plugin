@@ -2,9 +2,12 @@
   "name": "moego",
   "version": "2.0.0",
   "description": "MoeGo engineering team plugin — E2E testing, Superflow AI-native workflow, Datadog observability, and LLM writing skills for the MoeGo pet services platform.",
-  "author": "MoeGo Engineering",
+  "author": {
+    "name": "MoeGo Engineering",
+    "email": "engineering@moego.pet"
+  },
   "homepage": "https://github.com/MoeGolibrary/moego-ai-plugin",
   "repository": "https://github.com/MoeGolibrary/moego-ai-plugin",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "keywords": ["moego", "e2e", "testing", "datadog", "superflow", "bff", "playwright", "spec"]
 }

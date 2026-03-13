@@ -10,3 +10,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Claude Code session snapshots (transient, not for version control)
+.claude/sessions/
